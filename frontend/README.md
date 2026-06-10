@@ -1,6 +1,6 @@
-# Frontend WebGIS T2 - Sistem Monitoring Kecelakaan Lalu Lintas
+# Frontend - Sistem Monitoring Kecelakaan Lalu Lintas
 
-Frontend React + Leaflet untuk studi kasus T2. Versi ini disesuaikan agar mengikuti ketentuan frontend proyek dan tetap memakai backend yang sudah ada tanpa mengubah kode backend.
+Frontend React + Leaflet
 
 ## Fitur sesuai ketentuan proyek
 
@@ -34,9 +34,10 @@ Backend harus berjalan di `http://localhost:8000`.
 
 ## Catatan integrasi
 
-Default tahun menggunakan `2023` karena data contoh/seed backend berada pada tahun 2023. Jika endpoint titik kecelakaan backend belum stabil, frontend tetap mencoba memuat titik dari endpoint lain atau fallback data contoh agar demo visual T2 tetap berjalan.
+Default tahun menggunakan `2023` karena data contoh/seed backend berada pada tahun 2023. Jika endpoint titik kecelakaan backend belum stabil, frontend tetap mencoba memuat titik dari endpoint lain atau fallback data.
 
 
 ## Catatan fitur area rawan
 
-Tombol **Cek area rawan** sengaja dibuat aktif setelah pengguna klik titik/lokasi pada peta. Alurnya: klik lokasi pada peta, lalu tekan **Cek area rawan** untuk menjalankan analisis pada radius 1 km dari titik tersebut.
+Tombol **Cek area rawan** sengaja dibuat aktif setelah pengguna klik titik/lokasi pada peta. 
+Alurnya: klik lokasi pada peta, lalu tekan **Cek area rawan** untuk menjalankan analisis pada radius 1 km dari titik tersebut.
