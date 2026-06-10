@@ -1,0 +1,321 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_V1 = `${API_BASE_URL}/api/v1`;
+
+async function request(path, options = {}) {
+  const response = await fetch(`${API_V1}${path}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    },
+    ...options
+  });
+
+  let data = null;
+  const text = await response.text();
+
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = text;
+  }
+
+  if (!response.ok) {
+    const message = data?.detail || data?.message || data || 'Terjadi kesalahan saat menghubungi API.';
+    throw new Error(Array.isArray(message) ? JSON.stringify(message) : String(message));
+  }
+
+  return data;
+}
+
+function parseJsonMaybe(value) {
+  if (!value) return null;
+  if (typeof value === 'object') return value;
+  if (typeof value !== 'string') return null;
+
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
+
+function normalizePointCoordinates(coordinates) {
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return null;
+
+  let lng = Number(coordinates[0]);
+  let lat = Number(coordinates[1]);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+
+  // Lampung Selatan berada sekitar lat -6 s.d. -5 dan lng 105 s.d. 106.
+  // Jika backend mengirim [lat, lng], balikan agar GeoJSON tetap benar: [lng, lat].
+  const looksLikeLampungReversed = lng >= -7 && lng <= -4 && lat >= 104 && lat <= 107;
+  if (looksLikeLampungReversed) {
+    const temp = lng;
+    lng = lat;
+    lat = temp;
+  }
+
+  return [lng, lat];
+}
+
+function extractGeometry(item = {}) {
+  const directGeometry = item.geometry || item.geom || item.geom_geojson || item.geojson || item.lokasi_geojson;
+  const parsed = parseJsonMaybe(directGeometry);
+
+  if (parsed?.type === 'Feature') return parsed.geometry || null;
+  if (parsed?.type === 'Point') {
+    const coordinates = normalizePointCoordinates(parsed.coordinates);
+    return coordinates ? { type: 'Point', coordinates } : null;
+  }
+
+  if (typeof directGeometry === 'object' && directGeometry?.type === 'Point') {
+    const coordinates = normalizePointCoordinates(directGeometry.coordinates);
+    return coordinates ? { type: 'Point', coordinates } : null;
+  }
+
+  const longitude = Number(
+    item.longitude ??
+    item.lon ??
+    item.lng ??
+    item.x ??
+    item.bujur ??
+    item.long ??
+    item.st_x
+  );
+  const latitude = Number(
+    item.latitude ??
+    item.lat ??
+    item.y ??
+    item.lintang ??
+    item.st_y
+  );
+
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+
+  const coordinates = normalizePointCoordinates([longitude, latitude]);
+  return coordinates ? { type: 'Point', coordinates } : null;
+}
+
+function normalizeFeature(feature = {}, extra = {}) {
+  const rawGeometry = feature.geometry || extractGeometry(feature.properties || {});
+  const coordinates = normalizePointCoordinates(rawGeometry?.coordinates);
+
+  if (!coordinates) return null;
+
+  const properties = feature.properties || {};
+
+  return {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates
+    },
+    properties: {
+      ...properties,
+      id: properties.id ?? feature.id ?? `${coordinates[1]}-${coordinates[0]}`,
+      lokasi_nama: properties.lokasi_nama || properties.lokasi || properties.nama_lokasi || 'Lokasi kecelakaan',
+      nama_jalan: properties.nama_jalan || properties.jalan || '-',
+      tanggal_kejadian: properties.tanggal_kejadian || properties.tanggal || properties.created_at || null,
+      kecamatan_id: properties.kecamatan_id ?? extra.kecamatan_id ?? null,
+      kecamatan_nama: properties.kecamatan_nama || properties.nama_kecamatan || extra.kecamatan_nama || '-',
+      kondisi_jalan: properties.kondisi_jalan || '-',
+      cuaca: properties.cuaca || '-',
+      jenis_kendaraan: properties.jenis_kendaraan || '-',
+      jumlah_kendaraan: properties.jumlah_kendaraan ?? null,
+      kecepatan_perkiraan: properties.kecepatan_perkiraan ?? null,
+      penyebab: properties.penyebab || '',
+      keterangan: properties.keterangan || '',
+      korban: properties.korban || properties.korban_kecelakaan || [],
+      total_korban: properties.total_korban ?? properties.jumlah_korban ?? null,
+      sumber_data: extra.sumber_data || properties.sumber_data || 'api'
+    }
+  };
+}
+
+function rowToAccidentFeature(item = {}, extra = {}) {
+  const geometry = extractGeometry(item);
+  const coordinates = normalizePointCoordinates(geometry?.coordinates);
+
+  if (!coordinates) return null;
+
+  return {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates
+    },
+    properties: {
+      id: item.id ?? `${coordinates[1]}-${coordinates[0]}`,
+      lokasi_nama: item.lokasi_nama || item.lokasi || item.nama_lokasi || 'Lokasi kecelakaan',
+      nama_jalan: item.nama_jalan || item.jalan || '-',
+      tanggal_kejadian: item.tanggal_kejadian || item.tanggal || item.created_at || null,
+      kecamatan_id: item.kecamatan_id ?? extra.kecamatan_id ?? null,
+      kecamatan_nama: item.kecamatan_nama || item.nama_kecamatan || extra.kecamatan_nama || '-',
+      kondisi_jalan: item.kondisi_jalan || '-',
+      cuaca: item.cuaca || '-',
+      jenis_kendaraan: item.jenis_kendaraan || '-',
+      jumlah_kendaraan: item.jumlah_kendaraan ?? null,
+      kecepatan_perkiraan: item.kecepatan_perkiraan ?? null,
+      penyebab: item.penyebab || '',
+      keterangan: item.keterangan || '',
+      korban: item.korban || item.korban_kecelakaan || [],
+      total_korban: item.total_korban ?? item.jumlah_korban ?? null,
+      sumber_data: extra.sumber_data || item.sumber_data || 'api'
+    }
+  };
+}
+
+function accidentRowsToGeojson(rows = [], extra = {}) {
+  return {
+    type: 'FeatureCollection',
+    features: rows
+      .map((item) => rowToAccidentFeature(item, extra))
+      .filter(Boolean)
+  };
+}
+
+function normalizeAccidentGeojson(data, extra = {}) {
+  if (!data) return { type: 'FeatureCollection', features: [] };
+
+  if (data.type === 'FeatureCollection') {
+    return {
+      type: 'FeatureCollection',
+      features: (data.features || [])
+        .map((feature) => normalizeFeature(feature, extra))
+        .filter(Boolean)
+    };
+  }
+
+  if (data.type === 'Feature') {
+    const feature = normalizeFeature(data, extra);
+    return { type: 'FeatureCollection', features: feature ? [feature] : [] };
+  }
+
+  if (Array.isArray(data)) return accidentRowsToGeojson(data, extra);
+
+  const rows =
+    data.kecelakaan ||
+    data.data ||
+    data.results ||
+    data.items ||
+    data.titik_kecelakaan ||
+    data.features ||
+    [];
+
+  const kecamatan = data.kecamatan || data.wilayah || {};
+
+  return accidentRowsToGeojson(rows, {
+    ...extra,
+    kecamatan_id: extra.kecamatan_id ?? kecamatan.id ?? data.kecamatan_id,
+    kecamatan_nama: extra.kecamatan_nama || kecamatan.nama || data.kecamatan_nama || data.nama_kecamatan,
+    sumber_data: extra.sumber_data || 'spasial-dalam-kecamatan'
+  });
+}
+
+function blackSpotRowsToGeojson(results) {
+  const byId = new Map();
+
+  for (const result of results) {
+    const rows = result?.kecelakaan || result?.data || [];
+    for (const item of rows) {
+      const feature = rowToAccidentFeature(item, { sumber_data: 'fallback-black-spot' });
+      if (!feature || byId.has(feature.properties.id)) continue;
+      byId.set(feature.properties.id, feature);
+    }
+  }
+
+  return {
+    type: 'FeatureCollection',
+    features: Array.from(byId.values())
+  };
+}
+
+export const api = {
+  baseUrl: API_BASE_URL,
+
+  getHealth: async () => {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    if (!response.ok) throw new Error('Backend belum aktif atau health check gagal.');
+    return response.json();
+  },
+
+  getRingkasan: (tahun) => request(`/statistik/ringkasan${tahun ? `?tahun=${tahun}` : ''}`),
+
+  getStatistikKecamatan: (tahun) => request(`/statistik/per-kecamatan${tahun ? `?tahun=${tahun}` : ''}`),
+
+  getTrenBulanan: (tahun) => request(`/statistik/tren-bulanan?tahun=${tahun}`),
+
+  getKecamatan: () => request('/kecamatan/'),
+
+  getKecamatanGeojson: () => request('/kecamatan/geojson'),
+
+  getKecelakaanGeojson: async ({ tahun, kecamatanId, kecamatanNama } = {}) => {
+    const params = new URLSearchParams();
+    if (tahun) params.set('tahun', tahun);
+    if (kecamatanId) params.set('kecamatan_id', kecamatanId);
+    const suffix = params.toString() ? `?${params.toString()}` : '';
+    const data = await request(`/kecelakaan/geojson${suffix}`);
+    return normalizeAccidentGeojson(data, { kecamatan_id: kecamatanId, kecamatan_nama: kecamatanNama });
+  },
+
+  getKecelakaanDalamKecamatan: async (kecamatanId, kecamatanNama) => {
+    const data = await request(`/kecelakaan/spasial/dalam-kecamatan/${kecamatanId}`);
+    return normalizeAccidentGeojson(data, {
+      kecamatan_id: kecamatanId,
+      kecamatan_nama: kecamatanNama,
+      sumber_data: 'spasial-dalam-kecamatan'
+    });
+  },
+
+  getKecelakaanFallbackFromBlackSpot: async () => {
+    const centers = [
+      { latitude: -5.75, longitude: 105.50 },
+      { latitude: -5.90, longitude: 105.20 },
+      { latitude: -5.75, longitude: 105.85 },
+      { latitude: -5.60, longitude: 105.20 },
+      { latitude: -5.90, longitude: 105.70 }
+    ];
+
+    const settled = await Promise.allSettled(
+      centers.map((center) => api.getBlackSpot({
+        latitude: center.latitude,
+        longitude: center.longitude,
+        radiusMeter: 50000
+      }))
+    );
+
+    const successful = settled
+      .filter((item) => item.status === 'fulfilled')
+      .map((item) => item.value);
+
+    if (successful.length === 0) {
+      throw new Error('Endpoint kecelakaan belum dapat dimuat. Periksa endpoint GeoJSON atau black-spot pada backend.');
+    }
+
+    return blackSpotRowsToGeojson(successful);
+  },
+
+  getBlackSpot: ({ latitude, longitude, radiusMeter }) => {
+    const params = new URLSearchParams({
+      latitude,
+      longitude,
+      radius_meter: radiusMeter || 1000
+    });
+    return request(`/kecelakaan/spasial/black-spot?${params.toString()}`);
+  },
+
+  createKecelakaan: (payload) => request('/kecelakaan/', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  }),
+
+  updateKecelakaan: (id, payload) => request(`/kecelakaan/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload)
+  }),
+
+  deleteKecelakaan: (id) => request(`/kecelakaan/${id}`, {
+    method: 'DELETE'
+  })
+};
