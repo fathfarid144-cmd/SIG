@@ -2,7 +2,7 @@
 
 # Frontend (React + Leaflet)
 
-## Fitur sesuai ketentuan proyek
+## Fitur :
 
 - Peta interaktif dengan `react-leaflet`.
 - Layer polygon batas kecamatan dari endpoint GeoJSON.
