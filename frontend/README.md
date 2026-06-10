@@ -1,6 +1,6 @@
-# Frontend - Sistem Monitoring Kecelakaan Lalu Lintas
+# Sistem Monitoring Kecelakaan Lalu Lintas - Lampung Selatan
 
-Frontend React + Leaflet
+# Frontend (React + Leaflet)
 
 ## Fitur sesuai ketentuan proyek
 
