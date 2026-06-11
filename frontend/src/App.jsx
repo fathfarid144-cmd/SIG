@@ -6,9 +6,14 @@ import StatsCards from './components/StatsCards.jsx';
 import MapView from './components/MapView.jsx';
 import AccidentForm from './components/AccidentForm.jsx';
 import AccidentTable from './components/AccidentTable.jsx';
+import AccidentDetail from './components/AccidentDetail.jsx';
 import KecamatanTable from './components/KecamatanTable.jsx';
 import TrendChart from './components/TrendChart.jsx';
 import BlackSpotPanel from './components/BlackSpotPanel.jsx';
+import BlackSpotAnalyzer from './components/BlackSpotAnalyzer.jsx';
+import BlackSpotDetector from './components/BlackSpotDetector.jsx';
+import StatisticsPanel from './components/StatisticsPanel.jsx';
+import VictimsList from './components/VictimsList.jsx';
 import { getFallbackAccidentGeojson } from './fallbackData.js';
 
 function featureCollection(features = []) {
@@ -141,6 +146,7 @@ export default function App() {
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const [editingFeature, setEditingFeature] = useState(null);
+  const [selectedDetailFeature, setSelectedDetailFeature] = useState(null);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [warnings, setWarnings] = useState([]);
@@ -401,7 +407,13 @@ export default function App() {
             editingFeature={editingFeature}
             loading={saving}
           />
-          <BlackSpotPanel blackSpot={blackSpot} />
+          {blackSpot ? (
+            <BlackSpotAnalyzer 
+              blackSpot={blackSpot}
+            />
+          ) : (
+            <BlackSpotPanel blackSpot={blackSpot} />
+          )}
         </aside>
       </div>
 
@@ -415,7 +427,46 @@ export default function App() {
         onEdit={handleEditAccident}
         onDelete={handleDeleteAccident}
         deletingId={deletingId}
+        onDetail={setSelectedDetailFeature}
       />
+
+      {selectedDetailFeature && (
+        <AccidentDetail
+          feature={selectedDetailFeature}
+          onClose={() => setSelectedDetailFeature(null)}
+        />
+      )}
+
+      <StatisticsPanel
+        accidents={kecelakaanGeojson?.features || []}
+        statistikKecamatan={statistikKecamatan}
+      />
+
+      <section className="panel">
+        <div className="panel-title">
+          <div>
+            <p className="eyebrow">Data Korban</p>
+            <h2>Daftar Korban Kecelakaan</h2>
+          </div>
+        </div>
+        <VictimsList
+          accidents={kecelakaanGeojson?.features || []}
+          filter="all"
+        />
+      </section>
+
+      <section className="panel">
+        <div className="panel-title">
+          <div>
+            <p className="eyebrow">Deteksi Otomatis</p>
+            <h2>Identifikasi Area Rawan</h2>
+          </div>
+        </div>
+        <BlackSpotDetector
+          accidents={kecelakaanGeojson?.features || []}
+          onSelectBlackSpot={(spot) => setBlackSpot(spot)}
+        />
+      </section>
     </main>
   );
 }

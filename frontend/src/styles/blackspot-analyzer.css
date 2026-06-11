@@ -1,0 +1,404 @@
+/* BlackSpot Analyzer Container */
+.blackspot-analyzer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Risk Assessment Card */
+.risk-card {
+  border-left: 5px solid #1976d2;
+  border-radius: 8px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.risk-card.risk-critical {
+  border-left-color: #d32f2f;
+  background: rgba(211, 47, 47, 0.05);
+}
+
+.risk-card.risk-high {
+  border-left-color: #f57c00;
+  background: rgba(245, 124, 0, 0.05);
+}
+
+.risk-card.risk-medium {
+  border-left-color: #fbc02d;
+  background: rgba(251, 192, 45, 0.05);
+}
+
+.risk-card.risk-low {
+  border-left-color: #4caf50;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+.risk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.risk-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.risk-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  background: #1976d2;
+}
+
+.risk-badge.risk-critical {
+  background: #d32f2f;
+}
+
+.risk-badge.risk-high {
+  background: #f57c00;
+}
+
+.risk-badge.risk-medium {
+  background: #fbc02d;
+  color: #333;
+}
+
+.risk-badge.risk-low {
+  background: #4caf50;
+}
+
+.risk-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.risk-description {
+  line-height: 1.5;
+}
+
+.coords {
+  display: block;
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* Statistics Grid */
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.stat-box {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.stat-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.stat-percent {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Victim Breakdown */
+.victim-breakdown {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.victim-breakdown h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.breakdown-item {
+  background: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.breakdown-item.active {
+  border-color: currentColor;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.breakdown-item.victim-meninggal {
+  color: #d32f2f;
+}
+
+.breakdown-item.victim-meninggal.active {
+  border-color: #d32f2f;
+}
+
+.breakdown-item.victim-berat {
+  color: #f57c00;
+}
+
+.breakdown-item.victim-berat.active {
+  border-color: #f57c00;
+}
+
+.breakdown-item.victim-ringan {
+  color: #fbc02d;
+}
+
+.breakdown-item.victim-ringan.active {
+  border-color: #fbc02d;
+}
+
+.breakdown-number {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.breakdown-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Black Spot Accidents */
+.blackspot-accidents {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.blackspot-accidents h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+  font-style: italic;
+}
+
+.accidents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.accident-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.accident-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.accident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f9f9f9;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.accident-header:hover {
+  background: #f0f0f0;
+}
+
+.accident-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.accident-info strong {
+  font-size: 14px;
+  color: #333;
+}
+
+.distance-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.accident-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #666;
+  font-size: 13px;
+}
+
+.victim-count {
+  font-weight: 600;
+}
+
+.expand-icon {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+.accident-details {
+  padding: 12px;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.accident-details p {
+  margin: 6px 0;
+}
+
+.accident-details strong {
+  color: #333;
+}
+
+.victim-detail {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 12px;
+}
+
+.v-meninggal,
+.v-berat,
+.v-ringan {
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.v-meninggal {
+  background: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
+}
+
+.v-berat {
+  background: rgba(245, 124, 0, 0.1);
+  color: #f57c00;
+}
+
+.v-ringan {
+  background: rgba(251, 192, 45, 0.1);
+  color: #f57c00;
+}
+
+/* Recommendations */
+.recommendations {
+  background: #fffacd;
+  border: 1px solid #f0e68c;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.recommendations h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #856404;
+}
+
+.recommendations ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recommendations li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #856404;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0e68c);
+}
+
+.recommendations li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .breakdown-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .statistics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .accidents-list {
+    max-height: 300px;
+  }
+
+  .victim-detail {
+    flex-wrap: wrap;
+  }
+}

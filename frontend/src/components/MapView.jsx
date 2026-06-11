@@ -24,21 +24,24 @@ function safeLatLngFromFeature(feature) {
   const coordinates = feature?.geometry?.coordinates;
   if (!Array.isArray(coordinates) || coordinates.length < 2) return null;
 
-  let lng = Number(coordinates[0]);
-  let lat = Number(coordinates[1]);
+  const lng = Number(coordinates[0]);
+  const lat = Number(coordinates[1]);
 
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
 
-  // Jika koordinat kebalik [lat, lng], perbaiki untuk area Lampung Selatan.
-  if (lng >= -7 && lng <= -4 && lat >= 104 && lat <= 107) {
-    const temp = lng;
-    lng = lat;
-    lat = temp;
+  // Deteksi darurat jika koordinat keluar dari batas normal matematika Leaflet
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+    if (lng >= -90 && lng <= 90 && lat >= -180 && lat <= 180) {
+      return [lng, lat]; // Kembalikan swap darurat
+    }
+    return null;
   }
 
-  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+  // DI SINI KUNCINYA: Leaflet membutuhkan [Latitude, Longitude]
+  // Kita balik secara sadar dari data GeoJSON asli backend [lng, lat]
   return [lat, lng];
 }
+
 
 function ClickHandler({ onMapClick }) {
   useMapEvents({

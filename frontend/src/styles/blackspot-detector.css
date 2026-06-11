@@ -1,0 +1,402 @@
+/* BlackSpot Detector */
+.blackspot-detector {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detector-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.detector-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Radius Control */
+.radius-control {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.radius-control label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.radius-control strong {
+  color: #1976d2;
+  font-size: 16px;
+}
+
+.radius-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e0e0e0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.radius-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1976d2;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.radius-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1976d2;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.radius-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+}
+
+/* Detector Summary */
+.detector-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.summary-item {
+  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.summary-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #1976d2;
+}
+
+.summary-number {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1976d2;
+}
+
+.summary-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* Black Spots List */
+.blackspots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.blackspots-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.blackspots-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.blackspots-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.blackspots-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f9f9f9;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+}
+
+.empty-state p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #999;
+}
+
+.empty-state small {
+  display: block;
+  font-size: 12px;
+  color: #bbb;
+  font-style: italic;
+}
+
+/* Black Spot Card */
+.blackspot-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-left: 5px solid #1976d2;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.blackspot-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.blackspot-card.selected {
+  border-color: #1976d2;
+  background: #f0f5ff;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+}
+
+.blackspot-card.risk-rendah {
+  border-left-color: #4caf50;
+}
+
+.blackspot-card.risk-sedang {
+  border-left-color: #fbc02d;
+}
+
+.blackspot-card.risk-tinggi {
+  border-left-color: #f57c00;
+}
+
+.blackspot-card.risk-sangat_tinggi {
+  border-left-color: #d32f2f;
+}
+
+.card-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.spot-rank {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+  color: #333;
+}
+
+.spot-main {
+  flex: 1;
+}
+
+.spot-main h4 {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.spot-coords {
+  margin: 0;
+  font-size: 12px;
+  color: #999;
+  font-family: 'Courier New', monospace;
+}
+
+.risk-label {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  background: #1976d2;
+}
+
+.risk-label.risk-rendah {
+  background: #4caf50;
+}
+
+.risk-label.risk-sedang {
+  background: #fbc02d;
+  color: #333;
+}
+
+.risk-label.risk-tinggi {
+  background: #f57c00;
+}
+
+.risk-label.risk-sangat_tinggi {
+  background: #d32f2f;
+}
+
+/* Card Statistics */
+.card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 12px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 8px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.stat-name {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.stat-item.meninggal-indicator .stat-value {
+  color: #d32f2f;
+}
+
+/* Card Actions */
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-analyze {
+  flex: 1;
+  padding: 10px 12px;
+  background: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.blackspot-card.selected .btn-analyze {
+  background: #1976d2;
+  color: white;
+  border-color: #1976d2;
+}
+
+.btn-analyze:hover {
+  background: #e0e0e0;
+}
+
+.blackspot-card.selected .btn-analyze:hover {
+  background: #1565c0;
+}
+
+/* Detector Note */
+.detector-note {
+  background: #e3f2fd;
+  border: 1px solid #bbdefb;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.detector-note p {
+  margin: 0;
+  font-size: 13px;
+  color: #1565c0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .blackspot-detector {
+    padding: 16px;
+  }
+
+  .blackspot-card {
+    padding: 12px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-stats {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .spot-rank {
+    align-self: flex-start;
+  }
+
+  .risk-label {
+    align-self: flex-start;
+  }
+
+  .blackspots-list {
+    max-height: none;
+  }
+
+  .detector-summary {
+    grid-template-columns: 1fr;
+  }
+}

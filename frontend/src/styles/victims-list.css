@@ -1,0 +1,309 @@
+/* Victims List Container */
+.victims-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+/* Summary Statistics */
+.victims-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.summary-stat {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.summary-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.summary-stat.meninggal {
+  border-color: #d32f2f;
+  color: #d32f2f;
+}
+
+.summary-stat.meninggal:hover {
+  background: rgba(211, 47, 47, 0.05);
+}
+
+.summary-stat.berat {
+  border-color: #f57c00;
+  color: #f57c00;
+}
+
+.summary-stat.berat:hover {
+  background: rgba(245, 124, 0, 0.05);
+}
+
+.summary-stat.ringan {
+  border-color: #fbc02d;
+  color: #fbc02d;
+}
+
+.summary-stat.ringan:hover {
+  background: rgba(251, 192, 45, 0.05);
+}
+
+.summary-stat.total {
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.summary-stat.total:hover {
+  background: rgba(25, 118, 210, 0.05);
+}
+
+.stat-number {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Victims by Condition */
+.victims-by-condition {
+  margin-bottom: 32px;
+}
+
+.condition-header {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 5px solid #e0e0e0;
+}
+
+.condition-header.condition-meninggal-dunia {
+  background: rgba(211, 47, 47, 0.08);
+  border-left-color: #d32f2f;
+}
+
+.condition-header.condition-luka-berat {
+  background: rgba(245, 124, 0, 0.08);
+  border-left-color: #f57c00;
+}
+
+.condition-header.condition-luka-ringan {
+  background: rgba(251, 192, 45, 0.08);
+  border-left-color: #fbc02d;
+}
+
+.condition-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.condition-header .count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 14px;
+}
+
+/* Victims Grid */
+.victims-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.victim-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-left: 5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  position: relative;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.victim-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.victim-card.condition-meninggal-dunia {
+  border-left-color: #d32f2f;
+  background: rgba(211, 47, 47, 0.02);
+}
+
+.victim-card.condition-luka-berat {
+  border-left-color: #f57c00;
+  background: rgba(245, 124, 0, 0.02);
+}
+
+.victim-card.condition-luka-ringan {
+  border-left-color: #fbc02d;
+  background: rgba(251, 192, 45, 0.02);
+}
+
+.victim-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.victim-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.victim-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.victim-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 6px;
+  color: #666;
+}
+
+.detail-item strong {
+  color: #333;
+}
+
+.victim-injury-details {
+  background: rgba(0, 0, 0, 0.02);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.victim-injury-details strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.victim-injury-details p {
+  margin: 0;
+  color: #666;
+  line-height: 1.4;
+}
+
+.victim-accident-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 12px;
+}
+
+.victim-accident-info small {
+  color: #666;
+  display: block;
+}
+
+.victim-accident-info small strong {
+  color: #333;
+}
+
+.victim-status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  background: #1976d2;
+}
+
+.victim-status-badge.status-meninggal-dunia {
+  background: #d32f2f;
+}
+
+.victim-status-badge.status-luka-berat {
+  background: #f57c00;
+}
+
+.victim-status-badge.status-luka-ringan {
+  background: #fbc02d;
+  color: #333;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  color: #999;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .victims-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .victims-summary-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-number {
+    font-size: 32px;
+  }
+
+  .victim-card {
+    position: relative;
+  }
+
+  .victim-status-badge {
+    position: relative;
+    top: auto;
+    right: auto;
+    display: inline-block;
+    margin-top: 8px;
+  }
+}

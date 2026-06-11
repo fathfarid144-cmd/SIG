@@ -47,10 +47,9 @@ function normalizePointCoordinates(coordinates) {
 
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
 
-  // Lampung Selatan berada sekitar lat -6 s.d. -5 dan lng 105 s.d. 106.
-  // Jika backend mengirim [lat, lng], balikan agar GeoJSON tetap benar: [lng, lat].
-  const looksLikeLampungReversed = lng >= -7 && lng <= -4 && lat >= 104 && lat <= 107;
-  if (looksLikeLampungReversed) {
+  // Jika nilai longitude berada di rentang negatif (berarti tertukar dengan latitude Lampung -5 s.d -6)
+  // dan nilai latitude berada di rentang 105 (tertukar dengan bujur Lampung 105 s.d 106)
+  if (lng >= -10 && lng <= 0 && lat >= 90 && lat <= 140) {
     const temp = lng;
     lng = lat;
     lat = temp;

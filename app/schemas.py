@@ -22,11 +22,12 @@ class PointGeometry(BaseModel):
     def validate_coordinates(cls, v):
         if len(v) != 2:
             raise ValueError("Koordinat harus berupa [longitude, latitude]")
-        lon, lat = v
-        if not (-180 <= lon <= 180):
-            raise ValueError(f"Longitude tidak valid: {lon}")
-        if not (-90 <= lat <= 90):
-            raise ValueError(f"Latitude tidak valid: {lat}")
+        lng, lat = v[0], v[1]
+        
+        # JALUR PENYELAMAT: Jika user mengirim terbalik [lat, lng] di mana lat minus dan lng ratusan
+        if lat >= 90 and lat <= 180 and lng >= -90 and lng <= 90:
+            return [lat, lng] # Tukar secara paksa menjadi [lng, lat] yang benar
+            
         return v
 
 

@@ -31,31 +31,31 @@ VALUES
 
 -- ── NATAR (kecamatan_id = 1) ──────────────────────────────────
 ('2023-01-15 07:30:00+07', 'Jl. Lintas Sumatera km 25 - Natar', 'Jl. Lintas Sumatera', 'Baik', 'Cerah', 'Sepeda Motor', 2, 'Tidak mematuhi rambu lalu lintas',
-  1, ST_SetSRID(ST_MakePoint(105.1850, -5.6200), 4326)),
+  1, ST_SetSRID(ST_MakePoint(105.1850, -5.6250), 4326)),
 
 ('2023-02-08 18:45:00+07', 'Jl. Raya Natar - Depan SPBU', 'Jl. Raya Natar', 'Baik', 'Berawan', 'Mobil', 2, 'Kecepatan berlebih',
   1, ST_SetSRID(ST_MakePoint(105.1780, -5.6350), 4326)),
 
 ('2023-03-22 08:00:00+07', 'Simpang Natar - Jl. Lintas Timur', 'Jl. Lintas Timur', 'Sedang', 'Hujan', 'Sepeda Motor', 2, 'Jalan licin saat hujan',
-  1, ST_SetSRID(ST_MakePoint(105.1650, -5.6450), 4326)),
+  1, ST_SetSRID(ST_MakePoint(105.1650, -5.6400), 4326)),
 
 -- ── JATI AGUNG (kecamatan_id = 2) ────────────────────────────
 ('2023-01-20 14:15:00+07', 'Jl. Jati Agung - Depan Pasar', 'Jl. Jati Agung Raya', 'Baik', 'Cerah', 'Mobil', 2, 'Menerobos lampu merah',
-  2, ST_SetSRID(ST_MakePoint(105.3250, -5.5900), 4326)),
+  2, ST_SetSRID(ST_MakePoint(105.3250, -5.5950), 4326)),
 
 ('2023-04-10 06:30:00+07', 'Jl. Raya Jati Agung km 12', 'Jl. Raya Jati Agung', 'Sedang', 'Berawan', 'Truk', 1, 'Kelelahan pengemudi',
-  2, ST_SetSRID(ST_MakePoint(105.3100, -5.6000), 4326)),
+  2, ST_SetSRID(ST_MakePoint(105.3100, -5.6050), 4326)),
 
 -- ── TANJUNG BINTANG (kecamatan_id = 3) ───────────────────────
 ('2023-02-14 20:00:00+07', 'Jl. Lintas Pantai Timur - Tanjung Bintang', 'Jl. Lintas Pantai Timur', 'Baik', 'Cerah', 'Sepeda Motor', 2, 'Berkendara malam tanpa lampu',
-  3, ST_SetSRID(ST_MakePoint(105.4600, -5.5800), 4326)),
+  3, ST_SetSRID(ST_MakePoint(105.4600, -5.5850), 4326)),
 
 ('2023-05-18 11:30:00+07', 'Simpang Tanjung Bintang - Jl. Industri', 'Jl. Industri', 'Baik', 'Cerah', 'Truk', 2, 'Blind spot kendaraan besar',
   3, ST_SetSRID(ST_MakePoint(105.4750, -5.6000), 4326)),
 
 -- ── TANJUNG SARI (kecamatan_id = 4) ──────────────────────────
 ('2023-03-05 15:00:00+07', 'Jl. Raya Tanjung Sari', 'Jl. Raya Tanjung Sari', 'Sedang', 'Hujan', 'Sepeda Motor', 2, 'Jalan licin saat hujan',
-  4, ST_SetSRID(ST_MakePoint(105.5900, -5.6000), 4326)),
+  4, ST_SetSRID(ST_MakePoint(105.4900, -5.6100), 4326)),
 
 -- ── KATIBUNG (kecamatan_id = 5) ──────────────────────────────
 ('2023-01-28 09:15:00+07', 'Jl. Raya Katibung km 35', 'Jl. Raya Katibung', 'Baik', 'Cerah', 'Sepeda Motor', 2, 'Tidak menjaga jarak aman',
@@ -91,7 +91,7 @@ VALUES
 
 -- ── KALIANDA (kecamatan_id = 11) ─────────────────────────────
 ('2023-01-05 08:00:00+07', 'Jl. Raya Kalianda - Pusat Kota', 'Jl. Kalianda Raya', 'Baik', 'Cerah', 'Sepeda Motor', 3, 'Kecepatan berlebih di pemukiman',
-  11, ST_SetSRID(ST_MakePoint(105.4500, -5.7500), 4326)),
+  11, ST_SetSRID(ST_MakePoint(105.6062, -5.7391), 4326)),
 
 ('2023-02-12 17:00:00+07', 'Jl. Lintas Pantai Barat - Kalianda', 'Jl. Lintas Pantai Barat', 'Baik', 'Berawan', 'Mobil', 2, 'Mengantuk saat mengemudi',
   11, ST_SetSRID(ST_MakePoint(105.3800, -5.8200), 4326)),

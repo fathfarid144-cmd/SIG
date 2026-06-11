@@ -11,7 +11,7 @@ function rowFromFeature(feature) {
   };
 }
 
-export default function AccidentTable({ geojson, onEdit, onDelete, deletingId }) {
+export default function AccidentTable({ geojson, onEdit, onDelete, deletingId, onDetail }) {
   const [search, setSearch] = useState('');
 
   const rows = useMemo(() => (
@@ -86,6 +86,13 @@ export default function AccidentTable({ geojson, onEdit, onDelete, deletingId })
                 </td>
                 <td>
                   <div className="row-actions">
+                    <button
+                      className="primary small"
+                      type="button"
+                      onClick={() => onDetail && onDetail(row.feature)}
+                    >
+                      Detail
+                    </button>
                     <button
                       className="secondary small"
                       type="button"
